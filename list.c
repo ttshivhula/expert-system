@@ -59,13 +59,11 @@ void        print_list(t_expert *head)
 {
     t_expert *current = head;
 
-    printf("Debug\n");
     while (current != NULL)
     {
         printf("alpha: %c f_facts: %d status: %d\n", current->alpha, current->f_facts, current->status);
         current = current->next;
     }
-    printf("End of Debug\n");
 }
 
 void        edit_value(t_expert **head, char alpha, int status)
