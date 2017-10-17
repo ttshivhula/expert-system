@@ -1,0 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expert.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/17 09:39:57 by ttshivhu          #+#    #+#             */
+/*   Updated: 2017/10/17 09:40:12 by ttshivhu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef                 EXPERT_H
+# define                EXPERT_H
+# include "get_next_line.h"
+
+typedef struct          s_expert
+{
+    char                alpha;
+    int                 status;
+    int                 f_facts;
+    struct s_expert     *next;
+}                       t_expert;
+
+char                    **get_instructions(char *file, char **queries, char **facts);
+void                    add_item(t_expert   **head, char alpha, int f_facts, int status);
+void                    print_list(t_expert *head);
+void                    solver(char **rules, char *facts, char *queries);
+void                    print_results(t_expert *head, char *queries);
+void                    edit_value(t_expert **head, char alpha, int status);
+
+#endif
