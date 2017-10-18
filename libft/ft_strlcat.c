@@ -3,36 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qmanamel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/29 14:11:27 by qmanamel          #+#    #+#             */
-/*   Updated: 2017/06/07 12:54:11 by qmanamel         ###   ########.fr       */
+/*   Created: 2017/07/17 10:45:10 by ttshivhu          #+#    #+#             */
+/*   Updated: 2017/07/17 10:45:18 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlcat(char *dst, const char *src, size_t size)
+size_t			ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t	len;
-	size_t	n;
+	char		*cr;
+	char		*redr;
+	size_t		l;
 
-	len = 0;
-	while (len < size && *dst && *(dst++))
-		len++;
-	n = size - len;
-	if (!n)
-		return (len + ft_strlen(src));
-	while (*src)
+	cr = (char *)ft_memchr(dst, '\0', size);
+	if (cr == NULL)
+		return (size + ft_strlen(src));
+	redr = (char *)src;
+	l = (size_t)(cr - dst) + ft_strlen(redr);
+	while ((size_t)(cr - dst) < size - 1 && *redr != '\0')
 	{
-		if (n != 1)
-		{
-			*(dst++) = *src;
-			n--;
-		}
-		src++;
-		len++;
+		*cr = *redr;
+		cr++;
+		redr++;
 	}
-	*dst = '\0';
-	return (len);
+	*cr = '\0';
+	return (l);
 }

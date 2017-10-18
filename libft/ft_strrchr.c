@@ -3,23 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qmanamel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttshivhu <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/30 08:23:28 by qmanamel          #+#    #+#             */
-/*   Updated: 2017/05/30 08:23:30 by qmanamel         ###   ########.fr       */
+/*   Created: 2017/05/24 16:08:23 by ttshivhu          #+#    #+#             */
+/*   Updated: 2017/06/02 12:07:36 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *str, int c)
+char	*ft_strrchr(const char *haystack, int c)
 {
-	unsigned int len;
+	int len;
+	int i;
 
-	len = ft_strlen(str);
-	while (len != 0 && str[len] != (char)c)
-		len--;
-	while (str[len] == (char)c)
-		return ((char *)&str[len]);
+	len = ft_strlen(haystack) + 1;
+	i = len - 1;
+	while (i >= 0)
+	{
+		if (haystack[i] == c)
+			return ((char *)(haystack + i));
+		i--;
+	}
 	return (NULL);
 }

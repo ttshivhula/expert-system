@@ -3,93 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qmanamel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/21 10:56:35 by qmanamel          #+#    #+#             */
-/*   Updated: 2017/06/24 08:51:30 by qmanamel         ###   ########.fr       */
+/*   Created: 2017/08/14 11:28:19 by ttshivhu          #+#    #+#             */
+/*   Updated: 2017/08/14 14:12:54 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	copy_contents(const int fd, char **container)
+static int		reader(const int fd, char **container)
 {
-	int		chars_read;
-	char	*buff;
-	char	*tmp;
+	int			count;
+	char		*buff;
+	char		*tmp;
 
-	buff = (char*)malloc(sizeof(char) * (BUFF_SIZE + 1));
-	if (buff == NULL)
+	if (!(buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
 		return (-1);
-	chars_read = read(fd, buff, BUFF_SIZE);
-	{
-		buff[chars_read] = '\0';
-		tmp = ft_strjoin(*container, buff);
-		free(*container);
-		*container = tmp;
-	}
+	count = read(fd, buff, BUFF_SIZE);
+	buff[count] = '\0';
+	tmp = ft_strjoin(*container, buff);
+	free(*container);
+	*container = tmp;
 	free(buff);
-	return (chars_read);
+	return (count);
 }
 
-static int	holder_and_pre_check(char **h, const int fd, char **eol, int *cr)
+static int		checker(char **holder, const int fd, char **end_of_line)
 {
-	int		rtn_val;
+	int			ret;
 
-	if (*h == NULL)
-		*h = (char*)malloc(sizeof(char));
-	if (*h == NULL || fd < 0 || BUFF_SIZE < 0)
-		rtn_val = -1;
+	if (*holder == NULL)
+		*holder = (char *)malloc(sizeof(char));
+	if (*holder == NULL || fd < 0 || BUFF_SIZE < 0)
+		ret = -1;
 	else
-		rtn_val = 1;
-	*eol = ft_strchr(*h, '\n');
-	if (*eol != NULL)
-		*cr = 2;
-	return (rtn_val);
+		ret = 1;
+	*end_of_line = ft_strchr(*holder, '\n');
+	return (ret);
 }
 
-static void	pro_strjoin(char **holder, char *str1, char *str2)
+static void		free_join(char **holder, char *s1, char *s2)
 {
-	char	*tmp;
+	char		*tmp;
 
 	tmp = *holder;
-	*holder = ft_strjoin(str1, str2);
+	*holder = ft_strjoin(s1, s2);
 	free(tmp);
 }
 
-static void	pro_strdup(char **holder, char *str1)
+static	void	free_duplicate(char **holder, char *s)
 {
-	char	*tmp;
+	char		*tmp;
 
 	tmp = *holder;
-	*holder = ft_strdup(str1);
+	*holder = ft_strdup(s);
 	free(tmp);
 }
 
-int			get_next_line(const int fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
-	static char	*holder = NULL;
-	char		*end_of_line;
-	int			chars_read;
+	static char		*holder = NULL;
+	char			*end_of_line;
+	int				count;
 
-	if (holder_and_pre_check(&holder, fd, &end_of_line, &chars_read) == -1)
+	if (checker(&holder, fd, &end_of_line) == -1)
 		return (-1);
 	while (end_of_line == NULL)
 	{
-		chars_read = copy_contents(fd, &holder);
-		if (chars_read == 0)
+		count = reader(fd, &holder);
+		if (count == 0)
 		{
 			if (ft_strlen(holder) == 0)
 				return (0);
-			pro_strjoin(&holder, holder, "\n");
+			free_join(&holder, holder, "\n");
 			end_of_line = ft_strchr(holder, '\n');
 		}
-		else if (chars_read < 0)
+		else if (count < 0)
 			return (-1);
 		else
 			end_of_line = ft_strchr(holder, '\n');
 	}
 	*line = ft_strsub(holder, 0, ft_strlen(holder) - ft_strlen(end_of_line));
-	pro_strdup(&holder, &(end_of_line[1]));
+	free_duplicate(&holder, &(end_of_line[1]));
 	return (1);
 }

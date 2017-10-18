@@ -6,7 +6,7 @@
 /*   By: ttshivhu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/17 10:28:44 by ttshivhu          #+#    #+#             */
-/*   Updated: 2017/10/17 10:28:53 by ttshivhu         ###   ########.fr       */
+/*   Updated: 2017/10/18 09:17:07 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,14 @@ static int      check_error_in_line(char *line)
     {
         if (line[i] <= 'Z' && line[i] >= 'A')
             i++;
-        else if ((line[i] == '+') && ((line[i + 1] <= 'Z' && line[i + 1] >= 'A') || (line[i + 1] == '!')))
+        else if ((line[i] == '+') && ((line[i + 1] <= 'Z'
+						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
             i++;
-        else if ((line[i] == '|') && ((line[i + 1] <= 'Z' && line[i + 1] >= 'A') || (line[i + 1] == '!')))
+        else if ((line[i] == '|') && ((line[i + 1] <= 'Z'
+						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
             i++;
-        else if ((line[i] == '^') && ((line[i + 1] <= 'Z' && line[i + 1] >= 'A') || (line[i + 1] == '!')))
+        else if ((line[i] == '^') && ((line[i + 1] <= 'Z'
+						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
             i++;
         else if (ft_strncmp(line + i, "=>", 2) == 0)
             i+=2;

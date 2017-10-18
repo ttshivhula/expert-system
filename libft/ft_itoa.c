@@ -3,53 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qmanamel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttshivhu <marvin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/03 13:42:29 by qmanamel          #+#    #+#             */
-/*   Updated: 2017/06/08 14:51:10 by qmanamel         ###   ########.fr       */
+/*   Created: 2017/05/24 19:20:02 by ttshivhu          #+#    #+#             */
+/*   Updated: 2017/05/31 13:34:21 by ttshivhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char		*ft_return(char *ptr)
+static size_t	int_len(int n)
 {
-	char		*str;
-	int			i;
+	int len;
 
-	i = 0;
-	while (ptr[i] != '\0')
-		i++;
-	if (!(str = (char *)ft_memalloc(sizeof(i + 1))))
-		return (NULL);
-	ft_strcpy(str, ptr);
-	return (str);
+	len = 0;
+	if (n < 0)
+	{
+		n = -n;
+		len++;
+	}
+	len++;
+	n /= 10;
+	while (n)
+	{
+		len++;
+		n /= 10;
+	}
+	return (len);
 }
 
 char			*ft_itoa(int n)
 {
-	int			neg;
-	char		*ptr;
-	long int	num;
-	char		temp_size[50];
+	char	*str;
+	int		len;
 
-	neg = 0;
-	num = n;
-	ptr = &temp_size[50];
-	*ptr = '\0';
-	if (num == 0)
-		*--ptr = '0';
-	if (num < 0)
+	if (n == 2147483647)
+		return (ft_strdup("2147483647"));
+	else if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	len = int_len(n);
+	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	str[len] = '\0';
+	if (n < 0)
 	{
-		neg = 1;
-		num = num * -1;
+		n = -n;
+		str[0] = '-';
 	}
-	while (num > 0)
+	str[--len] = (n % 10) + 48;
+	n /= 10;
+	while (n)
 	{
-		*--ptr = num % 10 + '0';
-		num = num / 10;
+		str[--len] = (n % 10) + 48;
+		n /= 10;
 	}
-	if (neg == 1)
-		*--ptr = '-';
-	return (ft_return(ptr));
+	return (str);
 }

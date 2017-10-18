@@ -13,6 +13,7 @@
 #ifndef                 EXPERT_H
 # define                EXPERT_H
 # include "get_next_line.h"
+# include <stdio.h>
 
 typedef struct          s_expert
 {
