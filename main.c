@@ -12,6 +12,13 @@
 
 #include "expert.h"
 
+int     is_alpha(char c)
+{
+	if (c <= 'Z' && c >= 'A')
+		return (1);
+	return (0);
+}
+
 int		rule_validate(char *rules)
 {
 	int i;

@@ -71,7 +71,7 @@ void        edit_value(t_expert **head, char alpha, int status)
     t_expert *current;
 
     current = *head;
-    
+
     if(*head == NULL)
         return ;
     while (current->next != NULL)
@@ -106,4 +106,17 @@ void        print_results(t_expert *head, char *queries)
         }
         queries++;
     }
+}
+
+int        alpha_status(t_expert *head, char alpha)
+{
+    t_expert *current = head;
+
+    while (current != NULL)
+    {
+        if (current->alpha == alpha)
+            return (current->status);
+        current = current->next;
+    }
+    return (0);
 }

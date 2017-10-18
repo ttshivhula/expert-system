@@ -105,7 +105,7 @@ void            solver(char **rules, char *facts, char *queries)
         free(error);
         return ;
     }
-    edit_value(&list, 'I', 8);
-    print_list(list);
+    algo(&list, rules);
+    //print_list(list);
     print_results(list, queries);
 }
