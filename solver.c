@@ -26,6 +26,24 @@ static void     init_list(t_expert **list, char *facts, char *queries)
     }
 }
 
+static  void    add_alpha_to_stack(t_expert **list, char **rules)
+{
+    int     i;
+    int     j;
+
+    i = -1;
+    while (rules[++i])
+    {
+        j = 0;
+        while (rules[i][j])
+        {
+            if (rules[i][j] <= 'Z' && rules[i][j] >= 'A')
+                add_item(list, rules[i][j], -1, 0);
+            j++;
+        }
+    }
+}
+
 static int      check_error_in_line(char *line)
 {
     int i;
@@ -70,6 +88,7 @@ static int     check_error_n_solve(t_expert **list, char **rules, char **error)
             return (-1);
         }
     }
+    add_alpha_to_stack(list, rules);
     return (1);
 }
 
@@ -86,5 +105,7 @@ void            solver(char **rules, char *facts, char *queries)
         free(error);
         return ;
     }
+    edit_value(&list, 'I', 8);
+    print_list(list);
     print_results(list, queries);
 }

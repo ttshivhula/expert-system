@@ -68,12 +68,20 @@ void        print_list(t_expert *head)
 
 void        edit_value(t_expert **head, char alpha, int status)
 {
+    t_expert *current;
 
-    while (*head != NULL)
+    current = *head;
+    
+    if(*head == NULL)
+        return ;
+    while (current->next != NULL)
     {
-        if ((*head)->alpha == alpha)
-            (*head)->status = status;
-        *head = (*head)->next;
+        if(current->alpha == alpha)
+        {
+            current->status = status;
+            return ;
+        }
+        current = current->next;
     }
 }
 
