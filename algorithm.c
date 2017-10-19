@@ -158,7 +158,10 @@ static int     make_true(t_expert **head, char *line, char *first)
         }
     }
     if (ret && g_view)
+    {
+        sleep(2);
         printf("\x1b[34m%s\x1b[0m is now true because \x1b[36m%s\x1b[0m is true and implies \x1b[34m%s\x1b[0m\n", line, first, line);
+    }
     return (ret);
 }
 
@@ -169,16 +172,17 @@ void            algo(t_expert **head, char **rules)
     char    *last;
     int     t;
 
-    t = 0;
-    while (t < 100)
+    while (1)
     {
         i = -1;
+        t = 0;
         while (rules[++i])
         {
             break_into_two(rules[i], &first, &last);
             if (check_truth(head, first, 0, 0))
-                make_true(head, last, first);
+                t = make_true(head, last, first);
         }
-        t++;
+        if (!t)
+            break ;
     }
 }
