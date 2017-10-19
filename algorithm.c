@@ -159,7 +159,7 @@ static int     make_true(t_expert **head, char *line, char *first)
     }
     if (ret && g_view)
     {
-        sleep(2);
+        sleep(1);
         printf("\x1b[34m%s\x1b[0m is now true because \x1b[36m%s\x1b[0m is true and implies \x1b[34m%s\x1b[0m\n", line, first, line);
     }
     return (ret);

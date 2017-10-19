@@ -58,14 +58,26 @@ int        add_item(t_expert   **head, char alpha, int f_facts, int status)
     return (0);
 }
 
-void        print_list(t_expert *head)
+void        print_false(t_expert *head, char *queries)
 {
-    t_expert *current = head;
+    t_expert *current;
 
-    while (current != NULL)
+    while (*queries)
     {
-        printf("alpha: %c f_facts: %d status: %d\n", current->alpha, current->f_facts, current->status);
-        current = current->next;
+        current = head;
+        while (current != NULL)
+        {
+            if (current->alpha == *queries)
+            {
+                if (!current->status)
+                {
+                    sleep(1);
+                    printf("Sadly \x1b[31m%c\x1b[0m remains false\n", *queries);
+                }
+            }
+            current = current->next;
+        }
+        queries++;
     }
 }
 

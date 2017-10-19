@@ -14,12 +14,13 @@
 
 static void     init_list(t_expert **list, char *facts, char *queries)
 {
-    if (g_view)
-        printf("\x1b[36mADVANCED REASONING BY LORD VHULA ACTIVATED\x1b[0m\n");
     while (*facts)
     {
         if (add_item(list, *facts, 1, 1) && g_view)
+        {
+            sleep(1);
             printf("It is given as a fact that \x1b[34m%c\x1b[0m is true\n", *facts);
+        }
         facts++;
     }
     while (*queries)
@@ -61,8 +62,7 @@ static int      check_error_in_line(char *line)
         else if ((line[i] == '+') && ((line[i + 1] <= 'Z'
 						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
             i++;
-        else if ((line[i] == '|')/* && ((line[i + 1] <= 'Z'
-						&& line[i + 1] >= 'A') || (line[i + 1] == '!'))*/)
+        else if ((line[i] == '|'))
             i++;
         else if ((line[i] == '^') && ((line[i + 1] <= 'Z'
 						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
@@ -103,6 +103,8 @@ void            solver(char **rules, char *facts, char *queries)
     char        *error;
 
     list = NULL;
+    if (g_view)
+        printf("EVALUATING: \x1b[31m%s\x1b[0m\n", queries);
     init_list(&list, facts, queries);
     if (check_error_n_solve(&list, rules, &error) == -1)
     {
@@ -111,6 +113,7 @@ void            solver(char **rules, char *facts, char *queries)
         return ;
     }
     algo(&list, rules);
-    //print_list(list);
+    if (g_view)
+        print_false(list, queries);
     print_results(list, queries);
 }
