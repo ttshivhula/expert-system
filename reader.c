@@ -73,7 +73,8 @@ char	**get_instructions(char *file, char **queries, char **facts)
     int     j;
 
 	i = 0;
-	reader(file, &inst);
+	if (reader(file, &inst) == -1)
+        return (NULL);
 	if (strlen((inst = ft_strtrim(inst))))
 		spl = ft_strsplit(inst, '\n');
 	else

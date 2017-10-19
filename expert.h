@@ -29,7 +29,7 @@ void                    add_item(t_expert   **head, char alpha, int f_facts, int
 void                    print_list(t_expert *head);
 void                    solver(char **rules, char *facts, char *queries);
 void                    print_results(t_expert *head, char *queries);
-void                    edit_value(t_expert **head, char alpha, int status);
+int                     edit_value(t_expert **head, char alpha, int status);
 int                     alpha_status(t_expert *head, char alpha);
 void            algo(t_expert **head, char **rules);
 

@@ -66,23 +66,29 @@ void        print_list(t_expert *head)
     }
 }
 
-void        edit_value(t_expert **head, char alpha, int status)
+int        edit_value(t_expert **head, char alpha, int status)
 {
     t_expert *current;
 
     current = *head;
 
     if(*head == NULL)
-        return ;
-    while (current->next != NULL)
+        return (0);
+    while (current != NULL)
     {
         if(current->alpha == alpha)
         {
-            current->status = status;
-            return ;
+            if (current->status == status)
+                return (0);
+            else
+            {
+                current->status = status;
+                return (1);
+            }
         }
         current = current->next;
     }
+    return (0);
 }
 
 void        print_results(t_expert *head, char *queries)

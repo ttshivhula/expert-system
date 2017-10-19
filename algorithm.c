@@ -12,106 +12,132 @@
 
 #include "expert.h"
 
-static  char    *work_with(char *line, int after)
+static int      check_truth(t_expert **head, char *first)
 {
-    int     i;
+    int i;
+    int back_truth;
 
-    if (after)
+    i = -1;
+    back_truth = 0;
+    while (first[++i])
     {
-        while (*line)
+        if (is_alpha(first[i]))
         {
-            if (*line == '>')
-                return (ft_strdup(line + 1));
-            line++;
+            if (alpha_status(*head, first[i]) && first[i - 1] != '!' && first[i - 1] != '^' && first[i - 1] != '+')
+                back_truth = 1;
         }
-    }
-    else
-    {
-        i = -1;
-        while (line[++i])
+        else if (first[i] == '|')
         {
-            if (line[i] == '=' || line[i] == '<')
+            if (!back_truth)
             {
-                return (ft_strsub(line, 0, i));
+                if (is_alpha(first[i + 1]))
+                {
+                    if (alpha_status(*head, first[i + 1]))
+                        back_truth = 1;
+                }
+                else
+                {
+                    if (!alpha_status(*head, first[i + 2]))
+                        back_truth = 1;
+                }
             }
         }
+        else if (first[i] == '+')
+        {
+            if (back_truth)
+            {
+                if (first[i + 1] == '!' && alpha_status(*head, first[i + 2]))
+                    back_truth = 0;
+                if (is_alpha(first[i + 1]))
+                {
+                    if (!alpha_status(*head, first[i + 1]))
+                        back_truth = 0;
+                }
+            }
+            else
+                back_truth = 0;
+        }
+        else if (first[i] == '^')
+        {
+            if (back_truth)
+            {
+                if (first[i + 1] == '!' && !alpha_status(*head, first[i + 2]))
+                    back_truth = 0;
+                if (alpha_status(*head, first[i + 1]))
+                    back_truth = 0;
+            }
+            else
+            {
+                if (first[i + 1] == '!' && !alpha_status(*head, first[i + 2]))
+                    back_truth = 1;
+                if (alpha_status(*head, first[i + 1]))
+                    back_truth = 1;
+            }
+        }
+        else
+        {
+            if (!alpha_status(*head, first[i + 1]) && (i - 1 < 0))
+                back_truth = 1;
+        }
     }
-    return (NULL);
+    return (back_truth);
 }
 
-/*static  int     half_solve(t_expert **head, char *half)
+static void     break_into_two(char *line, char **first, char **last)
 {
     int     i;
 
     i = -1;
-    while (half[++i])
+    while (line[++i])
     {
-
+        if (line[i] == '>')
+            *last = ft_strdup(line + i + 1);
     }
-}*/
+    i = -1;
+    while (line[++i])
+    {
+        if (line[i] == '=' || line[i] == '<')
+            *first = ft_strsub(line, 0, i);
+    }
+}
 
-static int      after_or_before(t_expert **head, char *line, int after)
+static int     make_true(t_expert **head, char *line)
 {
-    int     i;
-    char    *curr;
-    int     ret;
+    int i;
+    int ret;
 
     i = -1;
     ret = 0;
-    curr = work_with(line, after);
-    while (curr[++i])
-    {
-        if (is_alpha(curr[i]) && alpha_status(*head, curr[i]) && (curr[i - 1] != '!'))
-            ret = 1;
-    }
-    return (ret);
-}
-
-static  int     alpha_pos(char *line, char alpha)
-{
-    int i;
-    int j;
-
-    i = -1;
-    j = 0;
     while (line[++i])
     {
-        if (ft_strncmp(line + i, "=>", 2) == 0)
-            j = 1;
-        if (line[i++] == alpha && j)
-            return (1);
-        if (line[i++] == alpha)
-            return (0);
-        i++;
-    }
-    return (0);
-}
-
-static void     solve_half(t_expert **head, char *line)
-{
-    int     i;
-
-    i = -1;
-    while (line[++i])
-    {
-        if (is_alpha(line[i]) && line[i - 1] != '!')
+        if (is_alpha(line[i]))
         {
-            //printf("alpha: %c pos: %d\n", line[i], alpha_pos(line, line[i]));
-            if (after_or_before(head, line, alpha_pos(line, line[i])))
-            {
-                edit_value(head, line[i], 1);
-            }
+            if (line[i - 1] != '!')
+                ret = edit_value(head, line[i], 1);
         }
     }
+    return (ret);
 }
 
 void            algo(t_expert **head, char **rules)
 {
     int     i;
+    char    *first;
+    char    *last;
+    int     t;
 
-    i = -1;
-    while (rules[++i])
+    t = 0;
+    while (t < 100)
     {
-        solve_half(head, rules[i]);
+        i = -1;
+        while (rules[++i])
+        {
+            break_into_two(rules[i], &first, &last);
+            if (check_truth(head, first))
+            {
+                make_true(head, last);
+            }
+        }
+        t++;
     }
 }
