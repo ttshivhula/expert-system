@@ -32,13 +32,12 @@ static int      or_exist(char *line)
     return (0);
 }
 
-int             check_truth(t_expert **head, char *first, int back_truth, int *j, int fuck)
+int             check_truth(t_expert **head, char *first, int back_truth, int fuck)
 {
     int i;
     int ex;
 
     i = -1;
-    *j = 0;
     ex = 0;
     while (first[++i])
     {
@@ -63,9 +62,7 @@ int             check_truth(t_expert **head, char *first, int back_truth, int *j
                 }
             }
             else
-            {
                 ex++;
-            }
             if (ex && or_exist(first) && !fuck)
                 return (1);
         }
@@ -105,17 +102,9 @@ int             check_truth(t_expert **head, char *first, int back_truth, int *j
         {
             if (first[i] == '(')
             {
-                //printf("sent: %s\n", first + i + 1);
-                back_truth = check_truth(head, first + i + 1, back_truth, j, 1);
+                back_truth = check_truth(head, first + i + 1, back_truth, 1);
                 while (first[i] && first[i] != ')')
                     i++;
-                //i--;
-            }
-            else
-            {
-                //printf("initial i: %d i after: %d  truth: %d\n", i, i + *j, back_truth);
-                *j = i;
-                return (back_truth);
             }
         }
         else
@@ -169,7 +158,6 @@ void            algo(t_expert **head, char **rules)
     char    *first;
     char    *last;
     int     t;
-    int     k;
 
     t = 0;
     while (t < 100)
@@ -178,7 +166,7 @@ void            algo(t_expert **head, char **rules)
         while (rules[++i])
         {
             break_into_two(rules[i], &first, &last);
-            if (check_truth(head, first, 0, &k, 0))
+            if (check_truth(head, first, 0, 0))
                 make_true(head, last);
         }
         t++;

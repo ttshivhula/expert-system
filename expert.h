@@ -31,7 +31,7 @@ void                    solver(char **rules, char *facts, char *queries);
 void                    print_results(t_expert *head, char *queries);
 int                     edit_value(t_expert **head, char alpha, int status);
 int                     alpha_status(t_expert *head, char alpha);
-int                     check_truth(t_expert **head, char *first, int back_truth, int *j, int fuck);
+int                     check_truth(t_expert **head, char *first, int back_truth, int fuck);
 void                    algo(t_expert **head, char **rules);
 
 #endif
