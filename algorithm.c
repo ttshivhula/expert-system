@@ -142,7 +142,7 @@ static void     break_into_two(char *line, char **first, char **last)
     }
 }
 
-static int     make_true(t_expert **head, char *line)
+static int     make_true(t_expert **head, char *line, char *first)
 {
     int i;
     int ret;
@@ -154,9 +154,11 @@ static int     make_true(t_expert **head, char *line)
         if (is_alpha(line[i]))
         {
             if (line[i - 1] != '!')
-                ret = edit_value(head, line[i], 1);
+                ret += edit_value(head, line[i], 1);
         }
     }
+    if (ret && g_view)
+        printf("\x1b[34m%s\x1b[0m is now true because \x1b[36m%s\x1b[0m is true and implies \x1b[34m%s\x1b[0m\n", line, first, line);
     return (ret);
 }
 
@@ -175,7 +177,7 @@ void            algo(t_expert **head, char **rules)
         {
             break_into_two(rules[i], &first, &last);
             if (check_truth(head, first, 0, 0))
-                make_true(head, last);
+                make_true(head, last, first);
         }
         t++;
     }

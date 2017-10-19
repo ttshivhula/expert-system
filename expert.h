@@ -23,6 +23,8 @@ typedef struct          s_expert
     struct s_expert     *next;
 }                       t_expert;
 
+int                     g_view;
+
 int                     is_alpha(char c);
 char                    **get_instructions(char *file, char **queries, char **facts);
 void                    add_item(t_expert   **head, char alpha, int f_facts, int status);
