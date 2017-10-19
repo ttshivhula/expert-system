@@ -14,9 +14,12 @@
 
 static void     init_list(t_expert **list, char *facts, char *queries)
 {
+    if (g_view)
+        printf("\x1b[36mADVANCED REASONING BY LORD VHULA ACTIVATED\x1b[0m\n");
     while (*facts)
     {
-        add_item(list, *facts, 1, 1);
+        if (add_item(list, *facts, 1, 1) && g_view)
+            printf("It is given as a fact that \x1b[34m%c\x1b[0m is true\n", *facts);
         facts++;
     }
     while (*queries)

@@ -27,7 +27,7 @@ int                     g_view;
 
 int                     is_alpha(char c);
 char                    **get_instructions(char *file, char **queries, char **facts);
-void                    add_item(t_expert   **head, char alpha, int f_facts, int status);
+int                     add_item(t_expert   **head, char alpha, int f_facts, int status);
 void                    print_list(t_expert *head);
 void                    solver(char **rules, char *facts, char *queries);
 void                    print_results(t_expert *head, char *queries);

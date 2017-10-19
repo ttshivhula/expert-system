@@ -26,7 +26,7 @@ static int  in_list(t_expert *head, char alpha)
     return (0);
 }
 
-void        add_item(t_expert   **head, char alpha, int f_facts, int status)
+int        add_item(t_expert   **head, char alpha, int f_facts, int status)
 {
     t_expert    *new_node;
 
@@ -34,12 +34,13 @@ void        add_item(t_expert   **head, char alpha, int f_facts, int status)
     {
         *head = malloc(sizeof(t_expert));
         if (*head == NULL) {
-            return ;
+            return (1);
         }
         (*head)->alpha = alpha;
         (*head)->status = status;
         (*head)->f_facts = f_facts;
         (*head)->next = NULL;
+        return (1);
     }
     else
     {
@@ -51,8 +52,10 @@ void        add_item(t_expert   **head, char alpha, int f_facts, int status)
             new_node->f_facts = f_facts;
             new_node->next = *head;
             *head = new_node;
+            return (1);
         }
     }
+    return (0);
 }
 
 void        print_list(t_expert *head)
