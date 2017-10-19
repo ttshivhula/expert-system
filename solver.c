@@ -58,8 +58,8 @@ static int      check_error_in_line(char *line)
         else if ((line[i] == '+') && ((line[i + 1] <= 'Z'
 						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
             i++;
-        else if ((line[i] == '|') && ((line[i + 1] <= 'Z'
-						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
+        else if ((line[i] == '|')/* && ((line[i + 1] <= 'Z'
+						&& line[i + 1] >= 'A') || (line[i + 1] == '!'))*/)
             i++;
         else if ((line[i] == '^') && ((line[i + 1] <= 'Z'
 						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
@@ -68,7 +68,7 @@ static int      check_error_in_line(char *line)
             i+=2;
         else if (ft_strncmp(line + i, "<=>", 3) == 0)
             i+=3;
-        else if ((line[i] == '!') && (line[i + 1] <= 'Z' && line[i + 1] >= 'A'))
+        else if ((line[i] == '!') && ((line[i + 1] <= 'Z' && line[i + 1] >= 'A') || line[i + 1] == '('))
             i++;
         else
             return (-1);

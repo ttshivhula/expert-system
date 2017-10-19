@@ -36,9 +36,11 @@ int             check_truth(t_expert **head, char *first, int back_truth, int fu
 {
     int i;
     int ex;
+    int prev;
 
     i = -1;
     ex = 0;
+    prev = 0;
     while (first[++i])
     {
         if (is_alpha(first[i]))
@@ -102,9 +104,15 @@ int             check_truth(t_expert **head, char *first, int back_truth, int fu
         {
             if (first[i] == '(')
             {
+                if (first[i - 1] == '!')
+                    prev = 1;
                 back_truth = check_truth(head, first + i + 1, back_truth, 1);
                 while (first[i] && first[i] != ')')
                     i++;
+                if (back_truth && prev)
+                    back_truth = 0;
+                else if (!back_truth && prev)
+                    back_truth = 1;
             }
         }
         else
