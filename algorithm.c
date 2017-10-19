@@ -134,9 +134,7 @@ void            algo(t_expert **head, char **rules)
         {
             break_into_two(rules[i], &first, &last);
             if (check_truth(head, first))
-            {
                 make_true(head, last);
-            }
         }
         t++;
     }
