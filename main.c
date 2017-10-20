@@ -42,13 +42,18 @@ int		main(int c, char **v)
 	char	**rules;
 	char	*queries;
 
-	if (c == 2 || (c == 3 && !strcmp(v[2], "-g")))
+	if (c == 2 || (c == 3 && !strcmp(v[1], "-e")))
     {
 		if (c == 3)
+		{
+			rules = get_instructions(v[2], &queries, &facts);
 			g_view = 1;
+		}
 		else
+		{
 			g_view = 0;
-        rules = get_instructions(v[1], &queries, &facts);
+			rules = get_instructions(v[1], &queries, &facts);
+		}
 	    if (rules && rule_validate(facts) && rule_validate(queries))
 		    solver(rules, facts, queries);
         else
