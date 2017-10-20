@@ -62,7 +62,7 @@ static int      check_error_in_line(char *line)
         else if ((line[i] == '+') && ((line[i + 1] <= 'Z'
 						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
             i++;
-        else if ((line[i] == '|'))
+        else if (line[i] == '|')
             i++;
         else if ((line[i] == '^') && ((line[i + 1] <= 'Z'
 						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
