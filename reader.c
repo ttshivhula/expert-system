@@ -104,6 +104,10 @@ char	**get_instructions(char *file, char **queries, char **facts)
             rules[j++] = ft_strdup(spl[i]);
         i++;
     }
+	i = -1;
+	while (spl[++i])
+		free(spl[i]);
+	free(spl);
     rules[j] = NULL;
     return (rules);
 }
