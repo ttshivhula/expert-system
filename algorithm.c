@@ -148,7 +148,7 @@ static void     break_into_two(char *line, char **first, char **last)
             k++;
         }
     }
-    if (k != 2)
+    if (k != 2 && k != 3)
     {
         printf("\x1b[31mThere is an error in line: \x1b[34m%s\x1b[0m\n", line);
         exit(1);
