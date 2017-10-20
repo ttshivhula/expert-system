@@ -181,10 +181,8 @@ void            algo(t_expert **head, char **rules)
             break_into_two(rules[i], &first, &last);
             if (check_truth(head, first, 0, 0))
                 t = make_true(head, last, first);
-            if (first)
-                free(first);
-            if (last)
-                free(last);
+            free(first);
+            free(last);
         }
         if (!t)
             break ;
