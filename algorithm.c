@@ -127,18 +127,31 @@ int             check_truth(t_expert **head, char *first, int back_truth, int fu
 static void     break_into_two(char *line, char **first, char **last)
 {
     int     i;
+    int     k;
 
     i = -1;
+    k = 0;
     while (line[++i])
     {
         if (line[i] == '>')
+        {
             *last = ft_strdup(line + i + 1);
+            k++;
+        }
     }
     i = -1;
     while (line[++i])
     {
         if (line[i] == '=' || line[i] == '<')
+        {
             *first = ft_strsub(line, 0, i);
+            k++;
+        }
+    }
+    if (k != 2)
+    {
+        printf("\x1b[31mThere is an error in line: \x1b[34m%s\x1b[0m\n", line);
+        exit(1);
     }
 }
 
