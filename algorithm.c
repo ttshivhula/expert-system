@@ -155,6 +155,15 @@ static int     make_true(t_expert **head, char *line, char *first)
         {
             if (line[i - 1] != '!')
                 ret += edit_value(head, line[i], 1);
+            if (line[i - 1] == '!')
+            {
+                //this might need some bug fixing and im not sure with it...
+                if (alpha_status(*head, line[i]))
+                {
+                    printf("contradition with %c\n", line[i]);
+                    exit(1);
+                }
+            }
         }
     }
     if (ret && g_view)
