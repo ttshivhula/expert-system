@@ -59,19 +59,17 @@ static int      check_error_in_line(char *line)
             i++;
         else if (line[i] == '(' || line[i] == ')')
             i++;
-        else if ((line[i] == '+') && ((line[i + 1] <= 'Z'
-						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
+        else if (line[i] == '+')
             i++;
         else if (line[i] == '|')
             i++;
-        else if ((line[i] == '^') && ((line[i + 1] <= 'Z'
-						&& line[i + 1] >= 'A') || (line[i + 1] == '!')))
+        else if (line[i] == '^')
             i++;
         else if (ft_strncmp(line + i, "=>", 2) == 0)
             i+=2;
         else if (ft_strncmp(line + i, "<=>", 3) == 0)
             i+=3;
-        else if ((line[i] == '!') && ((line[i + 1] <= 'Z' && line[i + 1] >= 'A') || line[i + 1] == '('))
+        else if (line[i] == '!')
             i++;
         else
             return (-1);
