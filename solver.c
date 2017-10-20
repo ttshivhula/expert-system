@@ -116,4 +116,9 @@ void            solver(char **rules, char *facts, char *queries)
     if (g_view)
         print_false(list, queries);
     print_results(list, queries);
+    free_list(list);
+    if (queries)
+        free(queries);
+    if (facts)
+        free(facts);
 }

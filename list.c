@@ -141,3 +141,16 @@ int        alpha_status(t_expert *head, char alpha)
     }
     return (0);
 }
+
+void      free_list(t_expert *head)
+{
+    t_expert    *tmp;
+
+    while (head != NULL)
+    {
+        tmp = head;
+        head = head->next;
+        free(tmp);
+    }
+
+}
