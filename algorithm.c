@@ -160,7 +160,7 @@ static int     make_true(t_expert **head, char *line, char *first)
                 //this might need some bug fixing and im not sure with it...
                 if (alpha_status(*head, line[i]))
                 {
-                    printf("contradition with %c\n", line[i]);
+                    printf("\x1b[31mThere is a contradiction with \x1b[34m%c\x1b[0m\n", line[i]);
                     exit(1);
                 }
             }
