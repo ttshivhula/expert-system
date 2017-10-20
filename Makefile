@@ -26,7 +26,9 @@ $(NAME):
 	@make -C libft $(SILENT)
 	@gcc $(FLAG) -c $(SRC)
 	@gcc $(FLAG) $(OBJ)  libft/libft.a -o $(NAME)
-	@printf "\x1b[32mCompiled $(NAME)\x1b[31m\n"
+	@printf "\x1b[32mCompiling the AI 👽\x1b[0m\n"
+	@sleep 5
+	@printf "\x1b[32mCompiled $(NAME) 👍\x1b[0m\n"
 
 clean:
 	@make clean -C libft $(SILENT)
