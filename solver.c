@@ -81,7 +81,6 @@ static int     check_error_n_solve(t_expert **list, char **rules, char **error)
 {
     int     i;
 
-    (void)list;
     i = -1;
     while (rules[++i])
     {
