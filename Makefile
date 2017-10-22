@@ -19,7 +19,6 @@ FLAG = -g3 -Wall -Werror -Wextra
 SILENT = --no-print-directory
 
 OBJ = $(SRC:.c=.o)
-UNAME := $(shell uname)
 
 all: $(NAME)
 $(NAME):
