@@ -19,6 +19,19 @@ int     is_alpha(char c)
 	return (0);
 }
 
+int        alpha_amb(t_expert *head, char alpha)
+{
+	t_expert *current = head;
+
+	while (current != NULL)
+	{
+		if (current->alpha == alpha)
+			return (current->f_facts);
+		current = current->next;
+	}
+	return (0);
+}
+
 int		rule_validate(char *rules)
 {
 	int i;

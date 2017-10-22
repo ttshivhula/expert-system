@@ -47,6 +47,8 @@ int             check_truth(t_expert **head, char *first, int back_truth, int fu
         {
             if (alpha_status(*head, first[i]) && first[i - 1] != '!' && first[i - 1] != '^' && first[i - 1] != '+')
                 back_truth = 1;
+            if (alpha_amb(*head, first[i]))
+                back_truth = 1;
         }
         else if (first[i] == '|')
         {
@@ -89,7 +91,7 @@ int             check_truth(t_expert **head, char *first, int back_truth, int fu
             {
                 if (first[i + 1] == '!' && !alpha_status(*head, first[i + 2]))
                     back_truth = 0;
-                if (alpha_status(*head, first[i + 1]))
+                if (alpha_status(*head, first[i + 1]) && !alpha_amb(*head, first[i + 1]))
                     back_truth = 0;
             }
             else
