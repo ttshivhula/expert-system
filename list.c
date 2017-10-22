@@ -122,7 +122,7 @@ void        print_results(t_expert *head, char *queries)
                 if (current->status && !current->f_facts)
                     printf("\x1b[32mtrue\x1b[0m\n");
                 else if (current->status && current->f_facts)
-                    printf("\x1b[32mambiguous\x1b[0m\n");
+                    printf("\x1b[33mambiguous\x1b[0m\n");
                 else
                     printf("\x1b[31mfalse\x1b[0m\n");
             }

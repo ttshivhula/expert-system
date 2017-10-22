@@ -241,6 +241,8 @@ void            algo(t_expert **head, char **rules)
             {
                 if (check_truth(head, last, 0, 0))
                     t = make_true(head, first, last, prev_amb(last, *head));
+                if (check_truth(head, first, 0, 0))
+                    t = make_true(head, last, first, prev_amb(first, *head));
             }
             if (first)
                 free(first);
