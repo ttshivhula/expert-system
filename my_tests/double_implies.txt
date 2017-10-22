@@ -1,0 +1,8 @@
+#Doube implies test
+A | B <=> B | C
+A => E
+A + B => F
+A + B + C => G
+
+=A
+?ABCDEFG
