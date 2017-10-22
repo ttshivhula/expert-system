@@ -1,5 +1,5 @@
 #Doube implies test
-A | B <=> B | C
+C | B <=> B | A
 A => E
 A + B => F
 A + B + C => G
