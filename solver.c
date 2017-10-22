@@ -16,7 +16,7 @@ static void     init_list(t_expert **list, char *facts, char *queries)
 {
     while (*facts)
     {
-        if (add_item(list, *facts, 1, 1) && g_view)
+        if (add_item(list, *facts, 0, 1) && g_view)
         {
             sleep(1);
             printf("It is given as a fact that \x1b[34m%c\x1b[0m is true\n", *facts);
@@ -42,7 +42,7 @@ static  void    add_alpha_to_stack(t_expert **list, char **rules)
         while (rules[i][j])
         {
             if (rules[i][j] <= 'Z' && rules[i][j] >= 'A')
-                add_item(list, rules[i][j], -1, 0);
+                add_item(list, rules[i][j], 0, 0);
             j++;
         }
     }

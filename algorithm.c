@@ -124,13 +124,15 @@ int             check_truth(t_expert **head, char *first, int back_truth, int fu
     return (back_truth);
 }
 
-static void     break_into_two(char *line, char **first, char **last)
+static int     break_into_two(char *line, char **first, char **last)
 {
     int     i;
     int     k;
+    int     ret;
 
     i = -1;
     k = 0;
+    ret = 0;
     while (line[++i])
     {
         if (line[i] == '>')
@@ -144,6 +146,8 @@ static void     break_into_two(char *line, char **first, char **last)
     {
         if (line[i] == '=' || line[i] == '<')
         {
+            if (line[i] == '<')
+                ret = 1;
             *first = ft_strsub(line, 0, i);
             k++;
         }
@@ -153,9 +157,10 @@ static void     break_into_two(char *line, char **first, char **last)
         printf("\x1b[31mThere is an error in line: \x1b[34m%s\x1b[0m\n", line);
         exit(1);
     }
+    return (ret);
 }
 
-static int     make_true(t_expert **head, char *line, char *first)
+static int     make_true(t_expert **head, char *line, char *first, int prev_amb)
 {
     int i;
     int ret;
@@ -167,10 +172,14 @@ static int     make_true(t_expert **head, char *line, char *first)
         if (is_alpha(line[i]))
         {
             if (line[i - 1] != '!')
-                ret += edit_value(head, line[i], 1);
+            {
+                if (line[i - 1] == '|' || line[i + 1] == '|' || line[i - 1] == '^' || line[i + 1] == '^' || prev_amb)
+                    ret += edit_value(head, line[i], 1, 1);
+                else
+                    ret += edit_value(head, line[i], 1, 0);
+            }
             if (line[i - 1] == '!')
             {
-                //this might need some bug fixing and im not sure with it...
                 if (alpha_status(*head, line[i]))
                 {
                     printf("\x1b[31mThere is a contradiction with \x1b[34m%c\x1b[0m\n", line[i]);
@@ -187,6 +196,27 @@ static int     make_true(t_expert **head, char *line, char *first)
     return (ret);
 }
 
+static int      prev_amb(char *line, t_expert *head)
+{
+    t_expert *current;
+
+    while (*line)
+    {
+        current = head;
+        while (current != NULL)
+        {
+            if (current->alpha == *line)
+            {
+                if (current->f_facts == 1)
+                    return (1);
+            }
+            current = current->next;
+        }
+        line++;
+    }
+    return (0);
+}
+
 void            algo(t_expert **head, char **rules)
 {
     int     i;
@@ -200,9 +230,16 @@ void            algo(t_expert **head, char **rules)
         t = 0;
         while (rules[++i])
         {
-            break_into_two(rules[i], &first, &last);
-            if (check_truth(head, first, 0, 0))
-                t = make_true(head, last, first);
+            if (!break_into_two(rules[i], &first, &last))
+            {
+                if (check_truth(head, first, 0, 0))
+                    t = make_true(head, last, first, prev_amb(first, *head));
+            }
+            else
+            {
+                if (check_truth(head, last, 0, 0))
+                    t = make_true(head, first, last, prev_amb(last, *head));
+            }
             if (first)
                 free(first);
             if (last)
