@@ -1,6 +1,6 @@
 !A => C
 D <=> C | G
 D ^ A => F
-(F + A) ^ !A => B
+!(F + A) ^ A => B
 =
 ?AFGDCB
