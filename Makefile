@@ -39,4 +39,13 @@ fclean: clean
 	@make fclean -C libft $(SILENT)
 	@printf "\x1b[31mRemoved $(NAME)\x1b[0m\n"
 
+install: $(NAME)
+	@sudo cp $(NAME) /usr/bin
+	@sudo chmod 777 /usr/bin/$(NAME)
+	@printf "\x1b[32mSuccessfully installed $(NAME)\x1b[0m\n"
+
+uninstall: fclean
+	@sudo rm /usr/bin/$(NAME)
+	@printf "\x1b[31mSuccessfully uninstalled $(NAME)\x1b[0m\n"
+
 re: fclean all
