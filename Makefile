@@ -24,7 +24,7 @@ all: $(NAME)
 $(NAME):
 	@make -C libft $(SILENT)
 	@gcc $(FLAG) -c $(SRC)
-	@gcc $(FLAG) $(OBJ)  libft/libft.a -o $(NAME)
+	@gcc $(FLAG) $(OBJ)  libft/libft.a -lreadline -o $(NAME)
 	@printf "\x1b[32mCompiling the AI 👽\x1b[0m\n"
 	@sleep 5
 	@printf "\x1b[32mCompiled $(NAME) 👍\x1b[0m\n"
@@ -38,14 +38,5 @@ fclean: clean
 	@/bin/rm -f $(NAME)
 	@make fclean -C libft $(SILENT)
 	@printf "\x1b[31mRemoved $(NAME)\x1b[0m\n"
-
-install: $(NAME)
-	@sudo cp $(NAME) /usr/bin
-	@sudo chmod 777 /usr/bin/$(NAME)
-	@printf "\x1b[32mSuccessfully installed $(NAME)\x1b[0m\n"
-
-uninstall: fclean
-	@sudo rm /usr/bin/$(NAME)
-	@printf "\x1b[31mSuccessfully uninstalled $(NAME)\x1b[0m\n"
 
 re: fclean all

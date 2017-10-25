@@ -98,24 +98,37 @@ void            solver(char **rules, char *facts, char *queries)
 {
     t_expert    *list;
     char        *error;
+    static      int times = 0;
 
-    list = NULL;
     if (g_view)
         printf("EVALUATING: \x1b[31m%s\x1b[0m\n", queries);
-    init_list(&list, facts, queries);
-    if (check_error_n_solve(&list, rules, &error) == -1)
+    while (1)
     {
-        printf("Error in line: %s\n", error);
-        free(error);
-        return ;
-    }
-    algo(&list, rules);
-    if (g_view)
-        print_false(list, queries);
-    print_results(list, queries);
-    free_list(list);
-    if (queries)
-        free(queries);
-    if (facts)
+        list = NULL;
+        if (times > 0)
+                facts = readline("\x1b[34mEnter new facts or \x1b[31m\"exit\"\x1b[34m to quit:\x1b[0m ");
+        if (ft_strcmp("exit", facts) == 0)
+                break ;
+        if (!rule_validate(facts))
+        {
+            printf("\x1b[31mYou have invalid characters in your facts\x1b[0m\n");
+            break ;
+        }
+        init_list(&list, facts, queries);
+        if (check_error_n_solve(&list, rules, &error) == -1)
+        {
+            printf("Error in line: %s\n", error);
+            free(error);
+            return ;
+        }
+        algo(&list, rules);
+        if (g_view)
+            print_false(list, queries);
+        print_results(list, queries);
+        free_list(list);
         free(facts);
+        times++;
+        if (!g_view)
+            break ;
+    }
 }

@@ -14,6 +14,8 @@
 # define                EXPERT_H
 # include "get_next_line.h"
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct          s_expert
 {
@@ -37,5 +39,6 @@ int                     alpha_amb(t_expert *head, char alpha);
 int                     check_truth(t_expert **head, char *first, int back_truth, int fuck);
 void                    algo(t_expert **head, char **rules);
 void                    free_list(t_expert *head);
+int                     rule_validate(char *rules);
 
 #endif

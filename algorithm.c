@@ -252,9 +252,4 @@ void            algo(t_expert **head, char **rules)
         if (!t)
             break ;
     }
-    i = -1;
-    while (rules[++i])
-        free(rules[i]);
-    free(rules);
-
 }

@@ -12,14 +12,14 @@
 
 #include "expert.h"
 
-int     is_alpha(char c)
+int			is_alpha(char c)
 {
 	if (c <= 'Z' && c >= 'A')
 		return (1);
 	return (0);
 }
 
-int        alpha_amb(t_expert *head, char alpha)
+int			alpha_amb(t_expert *head, char alpha)
 {
 	t_expert *current = head;
 
@@ -32,7 +32,7 @@ int        alpha_amb(t_expert *head, char alpha)
 	return (0);
 }
 
-int		rule_validate(char *rules)
+int			rule_validate(char *rules)
 {
 	int i;
 
@@ -49,7 +49,7 @@ int		rule_validate(char *rules)
 	return (1);
 }
 
-int		main(int c, char **v)
+int			main(int c, char **v)
 {
 	char 	*facts;
 	char	**rules;
@@ -70,9 +70,9 @@ int		main(int c, char **v)
 	    if (rules && rule_validate(facts) && rule_validate(queries))
 		    solver(rules, facts, queries);
         else
-            printf("Error\n");
+            printf("\x1b[31mError.\x1b[0m\n");
     }
 	else
-		printf("Error.\n");
+		printf("\x1b[31mError.\x1b[0m\n");
 	return (0);
 }
