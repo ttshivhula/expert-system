@@ -12,7 +12,7 @@
 
 NAME = expert_system
 
-SRC = main.c reader.c solver.c get_next_line.c list.c algorithm.c \
+SRC = main.c reader.c solver.c get_next_line.c list.c list2.c algorithm.c \
 
 FLAG = -g3 -Wall -Werror -Wextra
 
