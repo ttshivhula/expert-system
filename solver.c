@@ -59,11 +59,7 @@ static int      check_error_in_line(char *line)
             i++;
         else if (line[i] == '(' || line[i] == ')')
             i++;
-        else if (line[i] == '+')
-            i++;
-        else if (line[i] == '|')
-            i++;
-        else if (line[i] == '^')
+        else if (line[i] == '+' || line[i] == '|' || line[i] == '^')
             i++;
         else if (ft_strncmp(line + i, "=>", 2) == 0)
             i+=2;
