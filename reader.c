@@ -82,9 +82,19 @@ char	**get_instructions(char *file, char **queries, char **facts)
     while (spl[i])
     {
         if (spl[i][0] == '=')
-            *facts = ft_strdup(spl[i] + 1);
+	{
+		if (*facts != NULL)
+			*facts = ft_strjoin(*facts, spl[i] + 1);
+		else
+			*facts = ft_strdup(spl[i] + 1);
+	}
         if (spl[i][0] == '?')
-            *queries = ft_strdup(spl[i] + 1);
+	{
+		if (*queries != NULL)
+			*queries = ft_strjoin(*queries, spl[i] + 1);
+		else
+			*queries = ft_strdup(spl[i] + 1);
+	}
         i++;
     }
    	i = 0;

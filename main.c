@@ -52,9 +52,9 @@ int				rule_validate(char *rules)
 
 int				main(int c, char **v)
 {
-	char		*facts;
-	char		**rules;
-	char		*queries;
+	char		*facts = NULL;
+	char		**rules = NULL;
+	char		*queries = NULL;
 
 	if (c == 2 || (c == 3 && !strcmp(v[1], "-e")))
 	{
